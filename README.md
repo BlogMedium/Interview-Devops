@@ -1,6 +1,6 @@
 # Interview-Devops
 
-##1. What is multistage docker build?
+## 1. What is multistage docker build?
    
    A multi-stage build is a process that allows you to break the steps in building a Docker image into multiple stages. This will enable you to create images that include only the dependencies that are necessary for the desired functionality of the final application, cutting down on both time and space. With a multi-stage build, you will first build the image that contains only the dependencies needed to build your application. Then, after the image has been built, you can add in any additional layers needed to create your application and configure it for deployment.
 
