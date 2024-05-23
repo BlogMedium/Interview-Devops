@@ -54,11 +54,70 @@ There is a large difference in size between the two images. This difference allo
 
 With Network Policies, we can:
 
-* Isolate Pods: You can define rules to isolate pods within the same cluster or namespace, ensuring that they can only communicate with certain other pods or external services.
+* Isolate Pods: You can define rules to isolate pods within the same cluster or namespace, ensuring that they can only communicate with certain other pods.
 
 * Control Traffic: Network Policies allow you to control inbound and outbound traffic to pods based on IP address, port, and other criteria.
 
 * Increase Security: By enforcing network policies, you can enhance the security of your Kubernetes cluster by restricting unauthorized communication and minimizing the attack surface.
+
+## Demo 
+
+* Deny all connections
+* allow specific ports
+* allow from specific namespace
+* allow specific pod from specific namespace
+
+  ```
+1. Create the namespace
+   kubectl apply -f namespace.yaml
+2. Deploy the nginx and busybox pods:
+   kubectl apply -f nginx-pod.yaml
+   kubectl apply -f busybox-pod.yaml
+3. deploy the network policy
+   kubectl apply -f deny-all-networkpolicy.yaml
+```
+
+## testing
+Test Connectivity Using curl
+
+After ensuring the pods are running and the NetworkPolicy is applied, you can use the curl command from the busybox pod to test connectivity to the nginx pod.
+
+Get the IP address of the nginx pod
+```
+kubectl get pod nginx -n demo-namespace -o jsonpath='{.status.podIP}'
+```
+Exec into the busybox pod and use curl to test connectivity
+```
+kubectl exec -n demo-namespace -it busybox -- /bin/sh
+```
+Once inside the busybox pod, run:
+curl http://10.244.0.10
+
+If the NetworkPolicy is correctly allowing ingress traffic, you should see the HTML content served by the nginx pod. If it is blocking the traffic, curl will not be able to connect.
+
+
+```
+ranjiniganeshan@Ranjinis-MacBook-Pro network-policy-deny % kubectl get pod nginx -n demo-namespace -o jsonpath='{.status.podIP}'
+192.168.84.199%                                                                                                              
+ranjiniganeshan@Ranjinis-MacBook-Pro network-policy-deny % kubectl exec -n demo-namespace -it busybox -- /bin/sh
+/ # 
+/ # wget http://192.168.84.199
+Connecting to 192.168.84.199 (192.168.84.199:80)
+wget: can't open 'index.html': File exists
+/ # exit
+command terminated with exit code 1
+
+```
+
+##################################################################################################################################################
+
+
+
+
+ 
+  
+
+https://www.youtube.com/watch?v=Ptx1CcZSi6g
 
 
 
