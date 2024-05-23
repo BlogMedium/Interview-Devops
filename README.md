@@ -112,14 +112,56 @@ command terminated with exit code
 ```
 
 ##################################################################################################################################################
+## configmap
+
+It allows you to decouple environment-specific configuration from your container images, so your applications are more portable and easier to manage.
+
+* Decoupling Configuration: Allows separation of configuration data from container images.
+* Key-Value Pairs: Stores data as key-value pairs.
+* Volume or Environment Variables: Can be used to inject configuration data into pods as environment variables or as configuration files mounted in volumes.
+
+demo
 
 
 
+#####################################################################################################################################################
 
- 
-  
+Service account is a Kubernetes resource that gives pods access to Kubernetes APIs. It acts as an identity for processes running inside pods, providing them with the necessary credentials and permissions to authenticate and access specific resources within the cluster.
 
-https://www.youtube.com/watch?v=Ptx1CcZSi6g
+example AWS IAM roles, Google Cloud Service Accounts, and Azure Managed Identities.
+
+When you, as a user, access a Kubernetes cluster, you typically authenticate through your user account defined in the kubeconfig file.
+
+However, when it comes to applications running inside Kubernetes pods or external applications, they need a secure mechanism to authenticate and interact with the Kubernetes API server. This is where Kubernetes service accounts come into play.
+
+By associating a pod with a Kubernetes service account, you provide the application running inside the pod with the necessary credentials and permissions to authenticate and access specific resources in the API server.
+
+
+When a Service Account is created in Kubernetes, a token secret is automatically generated and associated with that Service Account. This token secret contains a JSON Web Token (JWT) used for authenticating the Service Account to the Kubernetes API server. Kubernetes automatically mounts this token secret into pods using the Service Account. Applications within these pods can then utilize the token for authentication purposes.
+
+
+```
+kubectl get sa ## shows default service account
+
+kubectl describe po test-sa-pod | grep -i "service account"
+
+ kubectl create sa application-sa
+
+kubectl get sa application-sa -o yaml
+
+Add a Service Account to a Pod
+
+kubectl run nginx \
+      --image=nginx \
+      --overrides='{ "spec": { "serviceAccountName": "application-sa" } }' \ 
+      --dry-run=client -o yaml > nginx.yaml
+
+kubectl describe pod nginx | grep -i "service account"
+
+```
+
+
+
 
 
 
