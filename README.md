@@ -97,6 +97,8 @@ If the NetworkPolicy is correctly allowing ingress traffic, you should see the H
 
 
 ```
+
+```
 ranjiniganeshan@Ranjinis-MacBook-Pro network-policy-deny % kubectl get pod nginx -n demo-namespace -o jsonpath='{.status.podIP}'
 192.168.84.199%                                                                                                              
 ranjiniganeshan@Ranjinis-MacBook-Pro network-policy-deny % kubectl exec -n demo-namespace -it busybox -- /bin/sh
@@ -105,7 +107,7 @@ ranjiniganeshan@Ranjinis-MacBook-Pro network-policy-deny % kubectl exec -n demo-
 Connecting to 192.168.84.199 (192.168.84.199:80)
 wget: can't open 'index.html': File exists
 / # exit
-command terminated with exit code 1
+command terminated with exit code 
 
 ```
 
