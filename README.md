@@ -273,6 +273,24 @@ if __name__ == "__main__":
     # Stop the instance
     stop_instance(instance_id)
 ```
+######################################################################
+Python program to check if the string is palindrome or not
+
+```
+def is_palindrome(s):
+    # Convert the string to lowercase and remove spaces
+    s = s.lower().replace(" ", "")
+    
+    # Compare the string with its reverse
+    return s == s[::-1]
+
+# Example usage:
+input_string = input("Enter a string: ")
+if is_palindrome(input_string):
+    print("The string is a palindrome.")
+else:
+    print("The string is not a palindrome.")
+```
 
 
 
