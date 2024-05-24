@@ -159,7 +159,14 @@ kubectl run nginx \
 kubectl describe pod nginx | grep -i "service account"
 
 ```
+############################################################################
+## How to monitor the Kubernetes cluster? how to deploy monitoring tools
 
+container Insights
+
+
+
+![cloudwatch](https://github.com/BlogMedium/Interview-Devops/assets/32661402/ad97b5ac-6272-45dc-9fcb-a998e9ed993a)
 
 
 
