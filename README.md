@@ -162,11 +162,78 @@ kubectl describe pod nginx | grep -i "service account"
 ############################################################################
 ## How to monitor the Kubernetes cluster? how to deploy monitoring tools
 
-container Insights
-
-
+container Insights : CloudWatch Container Insights to collect, aggregate, and summarize metrics and logs from your containerized applications and microservices.
 
 ![cloudwatch](https://github.com/BlogMedium/Interview-Devops/assets/32661402/ad97b5ac-6272-45dc-9fcb-a998e9ed993a)
+
+Steps 
+
+1. Associate CloudWatch Policy to our EKS Worker Nodes Role. attach CloudWatchAgentServerPolicy
+2. Install Container Insights
+   * Creates the Namespace amazon-cloudwatch.
+   * service account
+   * role
+   * role binding
+
+# Template
+curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/<REPLACE_CLUSTER_NAME>/;s/{{region_name}}/<REPLACE-AWS_REGION>/" | kubectl apply -f -
+
+# Replaced Cluster Name and Region
+curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/eksdemo1/;s/{{region_name}}/us-east-1/" | kubectl apply -f -
+
+3. verify daemonsets
+kubectl -n amazon-cloudwatch get daemonsets
+
+4. deploy sample app
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-nginx-deployment
+  labels:
+    app: sample-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-nginx
+  template:
+    metadata:
+      labels:
+        app: sample-nginx
+    spec:
+      containers:
+        - name: sample-nginx
+          image: stacksimplify/kubenginx:1.0.0
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "5m" 
+              memory: "5Mi"
+            limits:
+              cpu: "10m"
+              memory: "10Mi"       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-nginx-service
+  labels:
+    app: sample-nginx
+spec:
+  selector:
+    app: sample-nginx
+  ports:
+  - port: 80
+    targetPort: 80         
+
+```
+
+
+
+######################################################################################################################################################################
 
 
 
