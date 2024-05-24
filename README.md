@@ -235,6 +235,45 @@ spec:
 
 ######################################################################################################################################################################
 
+Python program to start and stop the ec2 instance
+
+```
+import boto3
+
+# Create a session using your AWS credentials
+session = boto3.Session(
+    region_name='us-west-2'
+)
+
+# Create an EC2 client
+ec2 = session.client('ec2')
+
+# Function to start an instance
+def start_instance(instance_id):
+    ec2.start_instances(InstanceIds=[instance_id])
+    print(f"Instance {instance_id} started.")
+
+# Function to stop an instance
+def stop_instance(instance_id):
+    ec2.stop_instances(InstanceIds=[instance_id])
+    print(f"Instance {instance_id} stopped.")
+
+# Example usage
+if __name__ == "__main__":
+    # Replace 'INSTANCE_ID' with the ID of your EC2 instance
+    instance_id = 'i-023890615d977a3c2'
+
+    
+    
+    
+    
+    # Start the instance
+    #start_instance(instance_id)
+
+    # Stop the instance
+    stop_instance(instance_id)
+```
+
 
 
 
