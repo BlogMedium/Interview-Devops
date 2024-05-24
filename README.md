@@ -290,6 +290,25 @@ if is_palindrome(input_string):
 else:
     print("The string is not a palindrome.")
 ```
+####################################################################
+### RBAC 
+### Authentication and Authorization
+
+Once a request is authenticated, the authorization process determines whether the client has the necessary permissions to perform the requested action on the specified Kubernetes resources.
+
+Every request involves an action, such as:
+
+Listing pods
+Creating deployments
+Deleting services
+Updating Deamonset
+Viewing pod logs etc.
+
+
+
+
+
+how to handle disaster recovery
 
 
 
