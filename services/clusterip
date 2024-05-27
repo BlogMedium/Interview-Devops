@@ -4,6 +4,7 @@ It exposes application pods to internal network traffic which enables communicat
 
 for example : if we have different microservices in eks cluster. frontend micorservice can talk to backend microservice.
 
+clusterip.yaml
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -38,11 +39,81 @@ spec:
       targetPort: 80
 ```
 
+* kubectl apply -f clusterip.yaml
+
+ kubectl get endpoints
+NAME                             ENDPOINTS                               AGE
+kubernetes                       192.168.156.191:443,192.168.97.85:443   18m
+nginx-deployment-clusterip-svc   192.168.37.187:80,192.168.8.145:80      8m13s
+* on worker node get the pod ip
+```
+  * curl 192.168.37.187:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+  * curl endpoint
+
 ## NodePort Service
 
 In Kubernetes, a NodePort service exposes an application to outside world.from the range 30000-32767 on every node in the cluster and 
 forwards traffic to the corresponding ClusterIP service running on that node.
 ```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      -  image: nginx
+         name: nginc-ctr
+---         
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment-clusterip-svc
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+    - name: nginx-port
+      protocol: TCP
+      port: 32767
+      targetPort: 80
+      nodePort: 30000
+
+```
+
 $ kubectl create deploy webapp --image=nginx --replicas=2
 
 $ kubectl get deployment
