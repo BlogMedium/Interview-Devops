@@ -114,25 +114,57 @@ spec:
 
 ```
 
-$ kubectl create deploy webapp --image=nginx --replicas=2
+$ kubectl apply -f nodeport.yaml
 
-$ kubectl get deployment
+$ kubectl get all
 
-$ kubectl get pods 
-
-kubectl expose deploy webapp --name=web-service --type=NodePort --port=80
-
-example curl -k http://workernodeip:32218
-  
+$ kubectl get nodes -o wide ( get the public ip of the nodes)\
+* open the port (security group_
+* browser http://workernodeip:30000
 ```
 
 ## The LoadBalancer service type in Kubernetes exposes a service outside the cluster and automatically provisions a load balancer in a cloud environment like AWSetc
 It creates a unique IP address that distributes incoming traffic across multiple instances of our application running in the cluster.
 
 
+```apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      -  image: nginx
+         name: nginc-ctr
+---         
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment-clusterip-svc
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ports:
+    - name: nginx-port
+      protocol: TCP
+      port: 80       # The port on which the service is exposed
+      targetPort: 80 # The port on which the Nginx container is listening
+
 ```
-kubectl expose deploy <deployment-name> --name=<service-name> --type=LoadBalancer --port=<port-name>
+
 ```
+kubectl apply -f loadbalancer.yaml
+kubectl get svc 
+http://external dns
 
 
 
