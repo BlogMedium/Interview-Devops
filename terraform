@@ -1,0 +1,30 @@
+## Terraform Taint
+
+Use case: Suppose you have an AWS EC2 instance managed by Terraform, and you suspect that the instance is in an unhealthy state and want to force its recreation.
+
+main.tf
+```
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "ExampleInstance"
+  }
+}
+```
+```
+* terraform init
+* terraform apply
+* terraform state list
+* terraform taint 
+terraform taint aws_instance.example
+
+# terraform taint aws_instance.example
+Resource instance aws_instance.example has been marked as tainted.
+ranjiniganeshan@Ranjinis-MacBook-Pro terraform-taint % 
+#####
