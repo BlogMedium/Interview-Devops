@@ -1,0 +1,48 @@
+## ClusterIP 
+is the default service type in Kubernetes which is accessible only within the Kubernetes cluster. 
+It exposes application pods to internal network traffic which enables communication with other objects running within the cluster. 
+
+for example : if we have different microservices in eks cluster. frontend micorservice can talk to backend microservice.
+
+```
+kubectl create deploy nginx --image=nginx --replicas=2
+
+kubectl get deploy
+
+kubectl expose deploy nginx --name=backend-svc --port=80 --target-port=8080
+
+kubectl get svc
+
+```
+
+## NodePort Service
+
+In Kubernetes, a NodePort service exposes an application to outside world.from the range 30000-32767 on every node in the cluster and 
+forwards traffic to the corresponding ClusterIP service running on that node.
+```
+$ kubectl create deploy webapp --image=nginx --replicas=2
+
+$ kubectl get deployment
+
+$ kubectl get pods 
+
+kubectl expose deploy webapp --name=web-service --type=NodePort --port=80
+
+example curl -k http://workernodeip:32218
+  
+```
+
+## The LoadBalancer service type in Kubernetes exposes a service outside the cluster and automatically provisions a load balancer in a cloud environment like AWSetc
+It creates a unique IP address that distributes incoming traffic across multiple instances of our application running in the cluster.
+
+
+```
+kubectl expose deploy <deployment-name> --name=<service-name> --type=LoadBalancer --port=<port-name>
+```
+
+
+
+
+
+
+
