@@ -1,0 +1,17 @@
+## If you were to make a change for a commit done 30days ago with respect to machine type used. How would you go about doing this change ? Would you directly change it?
+
+```
+git clone git@github.com:BlogMedium/Interview-Devops.git
+
+* find the commit hash from 30 days ago.
+git log --since="30 days ago"
+
+* create a new branch out of the commint history 
+git checkout -b change-machine-type <commit-hash>
+
+* make code changes
+git add .
+git commit -m "Changed machine type configuration"
+
+````
+
