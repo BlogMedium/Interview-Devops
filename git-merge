@@ -1,0 +1,28 @@
+# Set up the repository
+mkdir git-merge-demo
+cd git-merge-demo
+git init
+echo "Line 1" > file.txt
+git add file.txt
+git commit -m "Initial commit"
+
+# Create a branch and make changes
+git checkout -b feature-branch
+echo "Line 2 from feature branch" >> file.txt
+git add file.txt
+git commit -m "Add line 2 from feature branch"
+
+# Switch back to main and make conflicting changes
+git checkout main
+echo "Line 2 from main branch" >> file.txt
+git add file.txt
+git commit -m "Add line 2 from main branch"
+
+# Attempt to merge and resolve conflict
+git merge feature-branch
+# (Resolve conflict in file.txt)
+git add file.txt
+git commit -m "Merge feature-branch into main, resolve conflict in file.txt"
+
+# Verify the merge
+cat file.txt
