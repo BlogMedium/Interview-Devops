@@ -13,6 +13,10 @@ kubectl expose deploy nginx --name=backend-svc --port=80 --target-port=8080
 
 kubectl get svc
 
+kubectl run curlpod --image=radial/busyboxplus:curl -i --tty --rm
+curl http://clusterip
+
+
 ```
 
 ## NodePort Service
