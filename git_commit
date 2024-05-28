@@ -1,7 +1,7 @@
 ## If you were to make a change for a commit done 30days ago with respect to machine type used. How would you go about doing this change ? Would you directly change it?
 
 ```
-git clone git@github.com:BlogMedium/Interview-Devops.git
+git clone somerepo
 
 * find the commit hash from 30 days ago.
 git log --since="30 days ago"
