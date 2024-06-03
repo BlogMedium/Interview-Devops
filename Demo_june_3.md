@@ -10,7 +10,7 @@
 
 ![pod communiation using service ip with dns ](https://github.com/BlogMedium/Interview-Devops/blob/main/dns.jpeg)
 
-##stateless service
+## stateless service
 
 
 ![stateless](https://github.com/BlogMedium/Interview-Devops/blob/main/stateless.jpeg)
