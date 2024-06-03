@@ -20,6 +20,23 @@
 
 ![stateful](https://github.com/BlogMedium/Interview-Devops/blob/main/stateful.jpeg)
 
+## difference between stateful and stateless
+
+# stateless
+* does not depend on state
+* Does not save client data generated in one session for use in next session with that client.
+* ex nginx and web servers
+* you can simply scale stateless applciation
+* needs no external storage
+
+  # stateful
+  
+  * depend on state of applciation.
+  * saves data from each session to be used in the next session for the client
+  * ex db, kafka, elasticsearch
+  * needs persistent volume to store user data
+  * 
+
 
 
 
