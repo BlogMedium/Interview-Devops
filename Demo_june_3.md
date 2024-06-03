@@ -6,9 +6,9 @@
 
 2. pod to pod communication using cluster ip
    
-![pod communiation using service ip](https://github.com/BlogMedium/Interview-Devops/blob/main/serviceip.jpeg)!
+![pod communiation using service ip](https://github.com/BlogMedium/Interview-Devops/blob/main/serviceip.jpeg)
 
-[pod communiation using service ip with dns ](https://github.com/BlogMedium/Interview-Devops/blob/main/serviceip.jpeg)
+![pod communiation using service ip with dns ](https://github.com/BlogMedium/Interview-Devops/blob/main/dns.jpeg)
 
 
 
