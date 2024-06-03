@@ -42,6 +42,8 @@
 
 ## How to Troubleshoot Kubernetes ImagePullBackOff
 
+```
+
 apiVersion: v1
 kind: Pod
 metadata:
@@ -50,6 +52,8 @@ spec:
   containers:
     - name: nginx
       image: nginx:lates
+
+```
 
 ``` kubectl apply -f pod.yaml
      kubectl get pods
