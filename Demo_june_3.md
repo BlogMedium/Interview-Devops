@@ -42,6 +42,26 @@
 
 ## How to Troubleshoot Kubernetes ImagePullBackOff
 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:lates
+
+``` kubectl apply -f pod.yaml
+     kubectl get pods
+kubectl describe pod demo-pod 
+kubectl create secret docker-registry docker-registry-credentials \
+  --docker-server=https://index.docker.io/v1/
+  --docker-username=user
+  --docker-password=password
+  --docker-email=example@example.com
+
+```
+
 
 
 
