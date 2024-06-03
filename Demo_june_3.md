@@ -20,6 +20,10 @@
 
 ![stateful](https://github.com/BlogMedium/Interview-Devops/blob/main/stateful.jpeg)
 
+# stateful with persistent volume
+
+![stateful_pv](https://github.com/BlogMedium/Interview-Devops/blob/main/statefil_pv.jpeg)
+
 ## difference between stateful and stateless
 
 # stateless
