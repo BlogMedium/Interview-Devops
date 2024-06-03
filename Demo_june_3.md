@@ -15,7 +15,10 @@
 
 ![stateless](https://github.com/BlogMedium/Interview-Devops/blob/main/stateless.jpeg)
 
+## stateful service
 
+
+![stateful](https://github.com/BlogMedium/Interview-Devops/blob/main/stateless.jpeg)
 
 
 
