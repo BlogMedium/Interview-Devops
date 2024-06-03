@@ -39,6 +39,13 @@
   * saves data from each session to be used in the next session for the client
   * ex db, kafka, elasticsearch
   * needs persistent volume to store user data
+
+## How to Troubleshoot Kubernetes ImagePullBackOff
+
+
+
+
+
     
 
 
