@@ -166,7 +166,7 @@ docker run entrypoint-cmd-demo:latest -p --full-time
 
 ** ENTRYPOINT isn’t usually overridden by end users, but CMD can easily be changed through docker run **
 
-## How to restrict pull images form dockerhub to kubernetes
+## How to restrict pull images from dockerhub to kubernetes
 
 ** Kubernetes deployments can specify an imagePullPolicy which influences how the image is pulled.** 
 
