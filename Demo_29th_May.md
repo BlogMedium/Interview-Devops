@@ -113,6 +113,78 @@ Now we send a final request to the DNS server that actually has the record we wa
 
 ######################################################################################################
 
+## The difference between Docker ENTRYPOINT and CMD
+
+* ENTRYPOINT is the process that’s executed inside the container.
+* CMD is the default set of arguments that are supplied to the ENTRYPOINT process.
+
+# When to use ENTRYPOINT vs CMD?
+
+example 1: Using Docker ENTRYPOINT
+
+```
+FROM alpine:latest
+ENTRYPOINT ["ls"]
+docker build -t entrypoint-demo:latest .
+
+The ENTRYPOINT instruction means Docker runs the ls command when the container starts. As no CMD is set, the command is called without arguments.
+
+You can pass arguments directly through to the command by appending them to your docker run statement:
+
+docker run entrypoint-demo:latest -alh
+
+```
+
+Example 2 - Using Docker CMD
+
+```
+FROM alpine:latest
+CMD ["ls"]
+
+docker build -t cmd-demo:latest .
+
+The output is the same as before. Because no ENTRYPOINT is set, the CMD of ls is appended to the default ENTRYPOINT, resulting in /bin/sh -c "ls" being executed—the ls command still runs, but as a shell subprocess.
+
+Now observe what happens if you try to pass arguments to the ls command via docker run:
+
+This doesn’t work because ls isn’t the ENTRYPOINT. The -alh is passed as an argument to the default /bin/sh -c entrypoint, which results in the container’s shell trying to evaluate -alh as a command.
+```
+
+Example: Using ENTRYPOINT and CMD together
+
+```
+FROM alpine:latest
+ENTRYPOINT ["ls"]
+CMD ["-alh"]
+
+docker build -t entrypoint-cmd-demo:latest .
+```
+You can still supply custom arguments instead by overriding the CMD with docker run:
+```
+docker run entrypoint-cmd-demo:latest -p --full-time
+```
+
+** ENTRYPOINT isn’t usually overridden by end users, but CMD can easily be changed through docker run **
+
+## How to restrict pull images form dockerhub to kubernetes
+
+** Kubernetes deployments can specify an imagePullPolicy which influences how the image is pulled.** 
+
+## Minize the docker image size
+
+* Utilize a Minimal Base Image:
+* Leverage Multi-Stage Builds:
+* Minimize the layers
+Every instruction in your Dockerfile creates a new layer in the image. Aim to reduce the number of layers for efficient caching and smaller image size. Combine multiple commands, particularly RUN commands, whenever possible.
+* Employ .dockerignore:
+This file instructs Docker to exclude specific files and directories from being copied into the image during the build process. This helps eliminate unnecessary files that bloat the image size.
+* Remove Unnecessary Packages and Dependencies:
+Carefully analyze the packages you install using your package manager (e.g., apt-get or apk add). Avoid installing unnecessary packages or development tools that won't be used in the final runtime environment. Utilize flags like --no-install-recommends with apt-get to prevent installation of recommended but non-essential packages.
+* Clean Up After Installations:
+After installing packages using your package manager, consider cleaning up the cache and temporary files generated during the installation process. This can free up space within the image. Tools like apt-get clean or apk del can be used for this purpose, but ensure they are used within the same RUN instruction as the installation to maintain proper caching behavior.
+
+
+
 
 
   
