@@ -183,6 +183,38 @@ Carefully analyze the packages you install using your package manager (e.g., apt
 * Clean Up After Installations:
 After installing packages using your package manager, consider cleaning up the cache and temporary files generated during the installation process. This can free up space within the image. Tools like apt-get clean or apk del can be used for this purpose, but ensure they are used within the same RUN instruction as the installation to maintain proper caching behavior.
 
+************************************************************************************************************************************
+
+# Terraform Implicit Dependency
+
+```
+provider "aws" {
+  region = var.aws_region
+}
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+resource "aws_instance" "example_a" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+}
+resource "aws_instance" "example_b" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+}
+resource "aws_eip" "ip" {
+  vpc      = true
+  instance = aws_instance.example_a.id
+}
+```
+
+<p> The aws_eip resource type allocates and associates an Elastic IP to an EC2 instance. Since the instance must exist before the Elastic IP can be created and attached, Terraform must ensure that aws_instance.example_a is created before it creates aws_eip.ip. Meanwhile, aws_instance.example_b can be created in parallel to the other resources.</p>
+
 
 
 
