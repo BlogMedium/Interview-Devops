@@ -215,6 +215,27 @@ resource "aws_eip" "ip" {
 
 <p> The aws_eip resource type allocates and associates an Elastic IP to an EC2 instance. Since the instance must exist before the Elastic IP can be created and attached, Terraform must ensure that aws_instance.example_a is created before it creates aws_eip.ip. Meanwhile, aws_instance.example_b can be created in parallel to the other resources.</p>
 
+##  Manage explicit dependencies
+
+```
+
+resource "aws_s3_bucket" "example" { }
+resource "aws_instance" "example_c" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+  depends_on = [aws_s3_bucket.example]
+}
+module "example_sqs_queue" {
+  source  = "terraform-aws-modules/sqs/aws"
+  version = "3.3.0"
+  depends_on = [aws_s3_bucket.example, aws_instance.example_c]
+}
+
+```
+
+
+
+
 
 
 
