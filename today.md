@@ -16,4 +16,10 @@ managing the complete apps for stateful application via ** kubernetes operator *
 
 example : prometheus operator.
 
+Ansible 	Namrata	Let's say you have 2 servers with different ports and username then how can ansible handle different machines for applying and running the same runbook.
+Ansible 		In a ansible playbook, we have a section which could fail on certian nodes but we don't want the playbook to stop or exit beacuse of this. Is it possible to ignore if this part of playbook fails?
+Ansible 		How can we handles secrets in ansible? Let's say we have playbook which needs to login to premises server with login name ans password.
+
+
+
 
