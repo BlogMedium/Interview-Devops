@@ -38,9 +38,11 @@ INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.2
 echo "Instance ID: $INSTANCE_ID" >> /var/log/user-data.log
 echo "Region: $REGION" >> /var/log/user-data.log
 echo "<h1>$INSTANCE_ID</h1>" > /var/www/html/index.html
+echo "<h2>Region: $REGION</h2>" >> /var/www/html/index.html
 # Start the Apache service and enable it to start on boot
 systemctl start httpd
 systemctl enable httpd
+
 ```
 
 
