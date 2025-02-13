@@ -116,7 +116,7 @@ docker run ubuntu sleep 5
 FROM ubuntu
 CMD sleep 5 
 ```
-docker build -t ubuntu-sleeper 
+docker build -t ubuntu-sleeper .
 docker run ubuntu-sleeper
 
 ```
